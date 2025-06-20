@@ -1,3 +1,5 @@
+**WARNING**: this is a WIP, just playing around to see if it can be useful. Literally no idea if it even runs yet.
+
 # TensorBoard MCP Server
 
 A Model Context Protocol (MCP) server that enables Claude to interact with TensorBoard, providing direct access to machine learning experiment data and metrics.
