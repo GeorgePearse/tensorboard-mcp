@@ -7,6 +7,7 @@ A Model Context Protocol (MCP) server that enables Claude to interact with Tenso
 ## Overview
 
 This MCP server acts as a bridge between Claude and TensorBoard, allowing you to:
+
 - Query experiment metrics and visualizations through natural language
 - Compare training runs and analyze performance
 - Access scalar metrics, histograms, and other TensorBoard data
@@ -15,28 +16,33 @@ This MCP server acts as a bridge between Claude and TensorBoard, allowing you to
 ## Features
 
 ### 🔍 **Experiment Discovery**
+
 - List all available runs and experiments
 - Filter experiments by name or pattern
 - Quick overview of your training landscape
 
 ### 📊 **Metrics Analysis**
+
 - **Scalars**: Access loss, accuracy, learning rates, and custom metrics
 - **Histograms**: Analyze weight and gradient distributions
 - **Comparisons**: Side-by-side metrics comparison across multiple runs with statistical summaries
 
 ### 🛡️ **Production-Ready**
+
 - **Robust Error Handling**: Specific error types for different failure modes
 - **Input Validation**: Zod-based schema validation for all inputs
 - **Retry Logic**: Automatic retries for transient failures
 - **Structured Logging**: Winston-based logging with proper log levels
 
 ### 🏗️ **Clean Architecture**
+
 - Modular design with separation of concerns
 - Service layer for business logic
 - Dedicated API client for TensorBoard communication
 - Type-safe throughout with TypeScript
 
 ### 🤖 **Claude Integration**
+
 - Natural language queries about your experiments
 - Automated insights and anomaly detection
 - Training progress summaries and recommendations
@@ -58,11 +64,13 @@ npm run build
 ## Configuration
 
 1. Copy the environment template:
+
    ```bash
    cp .env.example .env
    ```
 
 2. Configure your TensorBoard URL in `.env`:
+
    ```
    TENSORBOARD_URL=http://localhost:6006
    ```
@@ -81,6 +89,7 @@ npm start
 ```
 
 For development with hot reload:
+
 ```bash
 npm run dev
 ```
@@ -106,35 +115,43 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
 ## Available Tools
 
 ### `list-runs`
+
 Lists all available TensorBoard runs/experiments.
 
 **Parameters:**
+
 - `experiment` (optional): Filter by experiment name or regex pattern
 
 **Example:** "Show me all experiments from today"
 
 ### `get-scalars`
+
 Retrieves scalar metrics for a specific run.
 
 **Parameters:**
+
 - `run` (required): The run ID or path
 - `tag` (optional): Specific metric name (e.g., "loss", "accuracy")
 
 **Example:** "What's the final validation accuracy for run_2024_01_15?"
 
 ### `get-histograms`
+
 Accesses histogram data for weights and gradients.
 
 **Parameters:**
+
 - `run` (required): The run ID or path
 - `tag` (optional): Specific histogram tag
 
 **Example:** "Show me the weight distribution for the final layer"
 
 ### `compare-runs`
+
 Compares metrics across multiple runs.
 
 **Parameters:**
+
 - `runs` (required): Array of run IDs
 - `metric` (required): The metric to compare
 
@@ -156,6 +173,7 @@ Claude: [Uses get-scalars] Looking at training vs validation metrics...
 ## Development
 
 ### Project Structure
+
 ```
 tensorboard-mcp/
 ├── src/
@@ -186,11 +204,13 @@ tensorboard-mcp/
 ```
 
 ### Building from Source
+
 ```bash
 npm run build
 ```
 
 ### Testing
+
 ```bash
 npm test
 ```
@@ -206,6 +226,7 @@ npm test
 ### Debug Mode
 
 Set debug logging in your environment:
+
 ```bash
 DEBUG=tensorboard-mcp npm start
 ```

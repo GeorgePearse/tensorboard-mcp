@@ -4,7 +4,8 @@ import { GetScalarsSchema } from '../validation/schemas.js';
 
 export const createGetScalarsTool = (): Tool => ({
   name: 'get-scalars',
-  description: 'Retrieve scalar metrics (loss, accuracy, etc.) for a specific run',
+  description:
+    'Retrieve scalar metrics (loss, accuracy, etc.) for a specific run',
   inputSchema: {
     type: 'object',
     properties: {
@@ -14,7 +15,8 @@ export const createGetScalarsTool = (): Tool => ({
       },
       tag: {
         type: 'string',
-        description: 'Optional: Specific tag/metric name (e.g., "loss", "accuracy"). If not provided, returns all scalar tags.',
+        description:
+          'Optional: Specific tag/metric name (e.g., "loss", "accuracy"). If not provided, returns all scalar tags.',
       },
     },
     required: ['run'],
@@ -27,9 +29,9 @@ export const handleGetScalars = async (
 ): Promise<any> => {
   // Validate input
   const validated = GetScalarsSchema.parse(args);
-  
+
   const scalars = await runService.getScalars(validated.run, validated.tag);
-  
+
   return {
     content: [
       {

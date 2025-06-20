@@ -24,16 +24,17 @@ export const handleListRuns = async (
 ): Promise<any> => {
   // Validate input
   const validated = ListRunsSchema.parse(args || {});
-  
+
   const runs = await runService.listRuns(validated.experiment);
-  
+
   return {
     content: [
       {
         type: 'text',
-        text: runs.length > 0 
-          ? `Found ${runs.length} runs:\n${runs.map(r => r.name).join('\n')}`
-          : 'No runs found',
+        text:
+          runs.length > 0
+            ? `Found ${runs.length} runs:\n${runs.map((r) => r.name).join('\n')}`
+            : 'No runs found',
       },
     ],
     isError: false,

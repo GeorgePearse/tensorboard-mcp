@@ -10,7 +10,9 @@ describe('RunService', () => {
   let mockClient: jest.Mocked<TensorBoardClient>;
 
   beforeEach(() => {
-    mockClient = new TensorBoardClient('http://localhost:6006') as jest.Mocked<TensorBoardClient>;
+    mockClient = new TensorBoardClient(
+      'http://localhost:6006'
+    ) as jest.Mocked<TensorBoardClient>;
     runService = new RunService(mockClient);
   });
 
@@ -63,10 +65,7 @@ describe('RunService', () => {
 
   describe('compareRuns', () => {
     it('should compare metrics across multiple runs', async () => {
-      const mockRuns: Run[] = [
-        { name: 'run1' },
-        { name: 'run2' },
-      ];
+      const mockRuns: Run[] = [{ name: 'run1' }, { name: 'run2' }];
       mockClient.listRuns.mockResolvedValue(mockRuns);
 
       const mockScalarData: ScalarData[] = [
@@ -87,9 +86,7 @@ describe('RunService', () => {
     });
 
     it('should handle missing runs gracefully', async () => {
-      const mockRuns: Run[] = [
-        { name: 'run1' },
-      ];
+      const mockRuns: Run[] = [{ name: 'run1' }];
       mockClient.listRuns.mockResolvedValue(mockRuns);
 
       const result = await runService.compareRuns(['run1', 'run2'], 'loss');

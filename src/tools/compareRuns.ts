@@ -28,9 +28,12 @@ export const handleCompareRuns = async (
 ): Promise<any> => {
   // Validate input
   const validated = CompareRunsSchema.parse(args);
-  
-  const comparison = await runService.compareRuns(validated.runs, validated.metric);
-  
+
+  const comparison = await runService.compareRuns(
+    validated.runs,
+    validated.metric
+  );
+
   return {
     content: [
       {

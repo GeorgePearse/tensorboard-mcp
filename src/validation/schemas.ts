@@ -1,9 +1,13 @@
 import { z } from 'zod';
 
 // Common schemas
-const RunIdSchema = z.string().min(1).regex(/^[a-zA-Z0-9_\-./]+$/, {
-  message: 'Run ID must contain only alphanumeric characters, underscores, hyphens, dots, and slashes',
-});
+const RunIdSchema = z
+  .string()
+  .min(1)
+  .regex(/^[a-zA-Z0-9_\-./]+$/, {
+    message:
+      'Run ID must contain only alphanumeric characters, underscores, hyphens, dots, and slashes',
+  });
 
 const TagSchema = z.string().min(1);
 

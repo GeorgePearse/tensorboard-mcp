@@ -5,7 +5,12 @@ export class TensorBoardError extends Error {
   public statusCode?: number;
   public details?: any;
 
-  constructor(message: string, code: ErrorCode, statusCode?: number, details?: any) {
+  constructor(
+    message: string,
+    code: ErrorCode,
+    statusCode?: number,
+    details?: any
+  ) {
     super(message);
     this.name = 'TensorBoardError';
     this.code = code;
@@ -39,11 +44,7 @@ export class TensorBoardError extends Error {
   }
 
   static invalidInput(message: string): TensorBoardError {
-    return new TensorBoardError(
-      message,
-      ErrorCode.INVALID_INPUT,
-      400
-    );
+    return new TensorBoardError(message, ErrorCode.INVALID_INPUT, 400);
   }
 
   static timeout(operation: string): TensorBoardError {

@@ -13,7 +13,7 @@ export class TensorBoardClient {
       baseURL,
       timeout: 30000, // 30 seconds
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -49,16 +49,16 @@ export class TensorBoardClient {
       },
       async (error: AxiosError) => {
         const config = error.config;
-        
+
         // Retry on 5xx errors
         if (error.response?.status && error.response.status >= 500 && config) {
           this.logger?.warn('Retrying TensorBoard API request', {
             status: error.response.status,
             url: config.url,
           });
-          
+
           // Wait 1 second before retry
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
           return this.client.request(config);
         }
 
@@ -79,7 +79,7 @@ export class TensorBoardClient {
   async listRuns(): Promise<Run[]> {
     try {
       const response = await this.client.get<string[]>('/data/runs');
-      return response.data.map(name => ({ name }));
+      return response.data.map((name) => ({ name }));
     } catch (error) {
       this.handleError(error, 'listRuns');
       throw error; // TypeScript needs this
@@ -103,9 +103,12 @@ export class TensorBoardClient {
 
   async getScalars(run: string, tag: string): Promise<ScalarData[]> {
     try {
-      const response = await this.client.get<ScalarData[]>('/data/plugin/scalars/scalars', {
-        params: { run, tag },
-      });
+      const response = await this.client.get<ScalarData[]>(
+        '/data/plugin/scalars/scalars',
+        {
+          params: { run, tag },
+        }
+      );
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
@@ -133,9 +136,12 @@ export class TensorBoardClient {
 
   async getHistograms(run: string, tag: string): Promise<HistogramData[]> {
     try {
-      const response = await this.client.get<HistogramData[]>('/data/plugin/histograms/histograms', {
-        params: { run, tag },
-      });
+      const response = await this.client.get<HistogramData[]>(
+        '/data/plugin/histograms/histograms',
+        {
+          params: { run, tag },
+        }
+      );
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
@@ -148,7 +154,7 @@ export class TensorBoardClient {
 
   private handleError(error: any, operation: string): never {
     this.logger?.error(`TensorBoard API error in ${operation}`, error);
-    
+
     if (error instanceof TensorBoardError) {
       throw error;
     }

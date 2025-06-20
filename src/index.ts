@@ -57,43 +57,41 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     const { name, arguments: args } = request.params;
-    
+
     logger.debug('Tool called', { tool: name, args });
-    
+
     switch (name) {
       case 'list-runs':
         return await handleListRuns(args, runService);
-      
+
       case 'get-scalars':
         return await handleGetScalars(args, runService);
-      
+
       case 'compare-runs':
         return await handleCompareRuns(args, runService);
-      
+
       default:
         return {
-          content: [
-            { type: 'text', text: `Unknown tool: ${name}` },
-          ],
+          content: [{ type: 'text', text: `Unknown tool: ${name}` }],
           isError: true,
         };
     }
   } catch (error) {
     logger.error('Tool execution failed', error);
-    
+
     // Handle validation errors
     if (error instanceof z.ZodError) {
       return {
         content: [
           {
             type: 'text',
-            text: `Invalid input: ${error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ')}`,
+            text: `Invalid input: ${error.errors.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`,
           },
         ],
         isError: true,
       };
     }
-    
+
     // Handle TensorBoard errors
     if (error instanceof TensorBoardError) {
       return {
@@ -106,7 +104,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         isError: true,
       };
     }
-    
+
     // Handle other errors
     return {
       content: [
@@ -127,19 +125,21 @@ async function main() {
       tensorboardUrl: config.tensorboardUrl,
       nodeEnv: config.nodeEnv,
     });
-    
+
     // Test connection to TensorBoard
     try {
       await tensorboardClient.listRuns();
       logger.info('Successfully connected to TensorBoard');
     } catch (error) {
       logger.warn('Could not connect to TensorBoard on startup', error);
-      logger.warn('Server will continue running, but TensorBoard must be available when tools are used');
+      logger.warn(
+        'Server will continue running, but TensorBoard must be available when tools are used'
+      );
     }
-    
+
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    
+
     logger.info('TensorBoard MCP Server running on stdio');
   } catch (error) {
     logger.error('Fatal error running server', error);
