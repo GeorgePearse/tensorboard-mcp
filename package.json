@@ -1,0 +1,36 @@
+{
+  "name": "tensorboard-mcp",
+  "version": "0.2.0",
+  "description": "MCP server for TensorBoard integration",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "tensorboard-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "winston": "^3.17.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5"
+  },
+  "keywords": [
+    "mcp",
+    "tensorboard",
+    "machine-learning"
+  ],
+  "author": "",
+  "license": "MIT"
+}
